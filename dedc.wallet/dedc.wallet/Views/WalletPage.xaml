@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DCToken.Views.WalletPage"
+              xmlns:vm="clr-namespace:DCToken.ViewModels"
+ 
+             Title="{Binding Title}"  >
+    <ContentPage.BindingContext>
+        <vm:WalletViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout   Padding="5, 5, 0, 5"
+                                 Spacing="10">
+            <StackLayout   Padding="5, 5, 0, 5"
+                                 Orientation="Horizontal"
+                                 Spacing="5">
+                <Entry x:Name="txtpwd" Keyboard="Text" IsPassword="True" MaxLength="50"
+       Placeholder="Enter password" Text=""
+       VerticalOptions="CenterAndExpand" WidthRequest="150" />
+                <Button Text="Add New"
+        Font="Large" 
+        BorderWidth="1"
+    Padding="5, 5, 5, 5"
+        Clicked="OnSaveWalletClicked" />
+
+                <Button Text="Import"
+        Font="Large" 
+        BorderWidth="1"
+    Padding="5, 5, 5, 5" Clicked="OnImportWalletClicked" />
+
+
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Picker x:Name="selectcion" Title="ETH"
+        TitleColor="Black"  SelectedIndexChanged="OnSelectChange"   WidthRequest="80">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>ETH</x:String>
+                            <x:String>USDT</x:String>
+                            <x:String>DEDC</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Picker x:Name="selectnet" Title="mainnet"
+        TitleColor="Black"  SelectedIndexChanged="OnSelectNetChange"  HorizontalOptions="EndAndExpand" Margin="0,0,15,0" >
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>mainnet</x:String>
+                            <x:String>ropsten</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            <StackLayout IsVisible="false" x:Name="stqrcodeview" >
+                <Grid x:Name="QrCodeSite" MinimumHeightRequest="400">
+                    <Button Clicked="OnHideQrcodeWalletClicked" BackgroundColor="White"></Button>
+                </Grid>
+            </StackLayout>
+            <RefreshView x:Name="tranloading" IsRefreshing="False" IsVisible="false">
+                <StackLayout IsVisible="false" x:Name="sendtran" MinimumHeightRequest="600" >
+
+                    <Entry x:Name="addfrom" Keyboard="Text"  MaxLength="50"
+       Placeholder="From" Text=""  FontSize="15"
+       VerticalOptions="FillAndExpand" MinimumWidthRequest="200"/>
+                    <Entry x:Name="addto" Keyboard="Text"  MaxLength="50"
+       Placeholder="To Address" Text="" FontSize="15" MinimumWidthRequest="500"
+       VerticalOptions="FillAndExpand"  />
+                    <Entry x:Name="addpwd" Keyboard="Text" IsPassword="True"  MaxLength="50"
+       Placeholder="Password" Text="" FontSize="18" MinimumWidthRequest="500"
+       VerticalOptions="FillAndExpand"  />
+                    <StackLayout Orientation="Horizontal">
+                        <Entry x:Name="tranprice" Keyboard="Numeric"  Placeholder="Amount" Text=""  IsVisible="false" />
+                        <Entry x:Name="traegas" Keyboard="Numeric"  Placeholder="Amount" Text=""  IsVisible="false" />
+                        <Entry x:Name="tranamount" Keyboard="Numeric"  MaxLength="20"
+       Placeholder="Amount" Text="" FontSize="20" FontAttributes="Bold" MinimumWidthRequest="160" WidthRequest="160" />
+                        <Label x:Name="egas" FontSize="16" Margin="0,0,0,20" Padding="0">fee:0.1</Label>
+                        <Button x:Name="sendbut" Text="Send"  WidthRequest="100"  Clicked="OnSendTranClicked"
+                        BackgroundColor="#eeeeee" TextColor="Black" ContentLayout="Left,10" HorizontalOptions="EndAndExpand" Margin="0,0,8,0"  />
+                    </StackLayout>
+
+                </StackLayout>
+            </RefreshView>
+            <StackLayout Padding="5, 5, 5, 5"
+                               Orientation="Horizontal" Spacing="15" >
+                <ListView x:Name="walletview" MinimumHeightRequest="100" RowHeight="170"   >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame BorderColor="Gray" Margin="0,0,8,8" BackgroundColor="#eeeeee"
+               Padding="1" HeightRequest="180" TabIndex="0"  HasShadow="True"   FlowDirection="MatchParent" CornerRadius="1"  >
+                                    <StackLayout Padding="5, 5, 5, 5" 
+                                 Spacing="10" IsClippedToBounds="True" >
+                                        <StackLayout Orientation="Horizontal" >
+                                            <Label Text="B:" FontAttributes="Bold" FontSize="Medium" />
+
+                                            <Label Text="{Binding Balance}"
+                                   FontAttributes="Bold" TextColor="Orange"
+                                   FontSize="Medium" />
+
+                                            <ImageButton Source="icon_delet.png" WidthRequest="20"  CommandParameter="{Binding ID}"
+                                                             HorizontalOptions="EndAndExpand" Margin="0,0,5,0" BackgroundColor="Transparent" 
+                                                             Clicked="OnDelWalletClicked" ></ImageButton>
+
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal" Margin="5,10,0,0" >
+                                            <Label Text="{Binding Address}"
+                                   FontSize="Medium"  />
+
+                                            <ImageButton Source="copy_48px.png" WidthRequest="40" BackgroundColor="Transparent" CommandParameter="{Binding Address}"
+                                                             Clicked="OnClipboardWalletClicked"></ImageButton>
+
+                                            <ImageButton Source="qrcode_48px.png" WidthRequest="40"  BackgroundColor="Transparent" CommandParameter="{Binding Address}"
+                                                       Clicked="OnQrcodeWalletClicked"   ></ImageButton>
+
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" 
+                                                     >
+
+                                            <Button   Text="Send"  CommandParameter="{Binding Address}"  
+                        BackgroundColor="Orange" TextColor="Black" Clicked="OnViewTranClicked" />
+
+                                            <Button   Text="Export File"
+                        
+                        BackgroundColor="Orange" TextColor="Black"  CommandParameter="{Binding ID}" Clicked="OnExportWalletClicked"/>
+
+
+                                        </StackLayout>
+
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+ 
+</ContentPage>
