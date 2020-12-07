@@ -34,7 +34,7 @@ namespace DCToken.Views
         private List<dcinfo> dclist = new List<dcinfo>();
         public WalletPage()
         {
-            App.ethapiurl = "https://mainnet.infura.io/v3/afd1b6b07fa94696abdefc20b5e8a590";
+            App.ethapiurl = "";
             InitializeComponent();
             this.Appearing += WalletPage_Appearing;
             this.Disappearing += WalletPage_Disappearing;
