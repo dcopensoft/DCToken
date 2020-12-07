@@ -287,9 +287,9 @@ namespace DCToken.Views
                 tranloading.IsVisible = sendtran.IsVisible;
 
                 if (picker.SelectedItem.ToString().ToLower() == "mainnet")
-                    App.ethapiurl = "https://mainnet.infura.io/v3/afd1b6b07fa94696abdefc20b5e8a590";
+                    App.ethapiurl = "https://mainnet.infura.io/v3/";
                 else
-                    App.ethapiurl = "https://ropsten.infura.io/v3/afd1b6b07fa94696abdefc20b5e8a590";
+                    App.ethapiurl = "https://ropsten.infura.io/v3/";
 
                 SelectNetCion();
 
