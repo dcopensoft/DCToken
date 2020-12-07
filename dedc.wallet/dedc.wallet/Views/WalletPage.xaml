@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DCToken.Views.WalletPage"
@@ -46,7 +46,7 @@
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>mainnet</x:String>
-                            <x:String>ropsten</x:String>
+                            <!--<x:String>ropsten</x:String>-->
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
@@ -60,20 +60,28 @@
                 <StackLayout IsVisible="false" x:Name="sendtran" MinimumHeightRequest="600" >
 
                     <Entry x:Name="addfrom" Keyboard="Text"  MaxLength="50"
-       Placeholder="From" Text=""  FontSize="15"
+       Placeholder="From" Text=""  FontSize="14"
        VerticalOptions="FillAndExpand" MinimumWidthRequest="200"/>
-                    <Entry x:Name="addto" Keyboard="Text"  MaxLength="50"
-       Placeholder="To Address" Text="" FontSize="15" MinimumWidthRequest="500"
+                    <StackLayout Orientation="Horizontal">
+                        <ImageButton Source="scans_ico.png" WidthRequest="25"  BackgroundColor="Transparent"   HorizontalOptions="EndAndExpand" Margin="0,0,0,0" 
+                                      Clicked="Button_SCans_Clicked"></ImageButton>
+                        <Entry x:Name="addto" Keyboard="Text"  MaxLength="50"
+       Placeholder="To Address" Text="" FontSize="13" WidthRequest="370"
        VerticalOptions="FillAndExpand"  />
+
+
+                    </StackLayout>
                     <Entry x:Name="addpwd" Keyboard="Text" IsPassword="True"  MaxLength="50"
-       Placeholder="Password" Text="" FontSize="18" MinimumWidthRequest="500"
+       Placeholder="Password" Text="" FontSize="17" MinimumWidthRequest="500"
        VerticalOptions="FillAndExpand"  />
+                  
+                    
                     <StackLayout Orientation="Horizontal">
                         <Entry x:Name="tranprice" Keyboard="Numeric"  Placeholder="Amount" Text=""  IsVisible="false" />
                         <Entry x:Name="traegas" Keyboard="Numeric"  Placeholder="Amount" Text=""  IsVisible="false" />
                         <Entry x:Name="tranamount" Keyboard="Numeric"  MaxLength="20"
-       Placeholder="Amount" Text="" FontSize="20" FontAttributes="Bold" MinimumWidthRequest="160" WidthRequest="160" />
-                        <Label x:Name="egas" FontSize="16" Margin="0,0,0,20" Padding="0">fee:0.1</Label>
+       Placeholder="Amount" Text="" FontSize="18" FontAttributes="Bold" MinimumWidthRequest="160" WidthRequest="160" />
+                        <Label x:Name="egas" FontSize="15" Margin="0,0,0,20" Padding="0">fee:0.1</Label>
                         <Button x:Name="sendbut" Text="Send"  WidthRequest="100"  Clicked="OnSendTranClicked"
                         BackgroundColor="#eeeeee" TextColor="Black" ContentLayout="Left,10" HorizontalOptions="EndAndExpand" Margin="0,0,8,0"  />
                     </StackLayout>
