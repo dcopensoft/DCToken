@@ -1,4 +1,4 @@
-﻿using DCToken.Models;
+using DCToken.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +34,14 @@ namespace DCToken.Views
         private List<dcinfo> dclist = new List<dcinfo>();
         public WalletPage()
         {
-            App.ethapiurl = "";
+            App.ethapiurl = "https://mainnet.infura.io/v3/afd1b6b07fa94696abdefc20b5e8a590";
             InitializeComponent();
             this.Appearing += WalletPage_Appearing;
             this.Disappearing += WalletPage_Disappearing;
- 
+
             try
             {
+
                 Uri uri = new Uri(App.serverurl + "/home/dclist");
                 HttpClient client = new HttpClient();
                 StringContent content = new StringContent("{}", Encoding.UTF8, "application/json");
@@ -57,7 +58,7 @@ namespace DCToken.Views
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DisplayAlert("", ex.Message, "ok");
             }
@@ -286,9 +287,9 @@ namespace DCToken.Views
                 tranloading.IsVisible = sendtran.IsVisible;
 
                 if (picker.SelectedItem.ToString().ToLower() == "mainnet")
-                    App.ethapiurl = "";
+                    App.ethapiurl = "https://mainnet.infura.io/v3/afd1b6b07fa94696abdefc20b5e8a590";
                 else
-                    App.ethapiurl = "";
+                    App.ethapiurl = "https://ropsten.infura.io/v3/afd1b6b07fa94696abdefc20b5e8a590";
 
                 SelectNetCion();
 
@@ -309,12 +310,6 @@ namespace DCToken.Views
                     var walletinfo = App.Wdb.GetWalletAsync(int.Parse(walletid.ToString())).Result;
                     if (walletinfo != null)
                     {
-                        var list = App.Wdb.GetWalletCionListAsync(int.Parse(walletid.ToString())).Result;
-                        if (list != null)
-                            foreach (var item in list)
-                            {
-                                await App.Wdb.DeleteWalletCoinAsync(item);
-                            }
                         await App.Wdb.DeleteWalletAsync(walletinfo);
                         WalletBind();
                     }
@@ -693,6 +688,19 @@ namespace DCToken.Views
             }
             tranloading.IsRefreshing = false;
             sendbut.IsEnabled = true;
+        }
+
+
+
+        private async void Button_SCans_Clicked(object sender, EventArgs e)
+        {
+            var scanner = new ZXing.Mobile.MobileBarcodeScanner();
+            var result = await scanner.Scan();
+            if (result != null)
+            {
+                addto.Text = result.Text.Trim();
+            }
+
         }
     }
 
